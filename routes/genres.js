@@ -1,69 +1,73 @@
 const express = require("express");
 const router = express.Router();
 const Joi = require("joi");
+const mongoose = require("mongoose");
 
-const genres = [
-  {
-    id: 1,
-    name: "Romance",
-  },
-  {
-    id: 2,
-    name: "Comedy",
-  },
-  {
-    id: 3,
-    name: "Action",
-  },
-  {
-    id: 4,
-    name: "Thriller",
-  },
-];
+mongoose
+  .connect("mongodb://localhost/vidly")
+  .then(() => console.log("connected to database...."))
+  .catch((err) => {
+    console.error("could not connect to database....", err);
+  });
 
-router.get("/", (req, res) => {
+const Genres = new mongoose.model(
+  "genres",
+  new mongoose.Schema({
+    name: {
+      type: String,
+      required: true,
+      min: 3,
+      max: 50,
+    },
+  })
+);
+
+router.get("/", async (req, res) => {
+  genres = await Genres.find();
   res.send(genres);
 });
 
-router.get("/:id", (req, res) => {
-  const genre = genres.find((c) => c.id === parseInt(req.params.id));
-  if (!genre)
+router.get("/:id", async (req, res) => {
+  try {
+    const genre = await Genres.findById(req.params.id);
+    res.send(genre);
+  } catch {
     return res
       .status(404)
       .send(`Cannot find genres with given id : ${req.params.id}`);
-  res.send(genre);
+  }
 });
 
-router.post("/", (req, res) => {
+router.post("/", async (req, res) => {
   const { error } = validateGenres(req.body);
   if (error) return res.status(400).send(error.details[0].message);
-
-  const genre = {
-    id: genres.length + 1,
+  const genre = await new Genres({
     name: req.body.name,
-  };
-  genres.push(genre);
+  });
+  genre.save();
   res.send(genre);
 });
 
-router.put("/:id", (req, res) => {
+router.put("/:id", async (req, res) => {
   const { error } = validateGenres(req.body);
   if (error) return res.status(400).send(error.details[0].message);
-  const genre = genres.find((c) => c.id === parseInt(req.params.id));
-  genre.name = req.body.name;
+
+  const genre = await Genres.updateOne(
+    { _id: req.params.id },
+    {
+      name: req.body.name,
+    },
+    { new: true }
+  );
   res.send(genre);
 });
 
-router.delete("/:id", (req, res) => {
-  const index = parseInt(req.params.id);
-  const genre = genres.find((c) => c.id === index);
-  if (genre) {
-    genres.splice(index - 1, 1);
-    res.send(genres);
-  } else {
-    res
-      .status(400)
-      .send(`Cannot find genres with id : ${parseInt(req.params.id)}`);
+router.delete("/:id", async (req, res) => {
+  try {
+    const genre = await Genres.deleteOne({ _id: req.params.id });
+    res.send(genre);
+  } catch {
+    res.status(400).send(`Cannot find genres with id : ${req.params.id}`);
   }
 });
 
