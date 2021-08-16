@@ -5,6 +5,7 @@ const home = require("./routes/home");
 require("dotenv").config();
 const customers = require("./routes/customer");
 const movies = require("./routes/movies");
+const rentals = require("./routes/rentals");
 
 app.use(express.json());
 
@@ -16,3 +17,4 @@ app.use("/api/genres", genres);
 app.use("/", home);
 app.use("/api/customers", customers);
 app.use("/api/movies", movies);
+app.use("/api/rentals", rentals);
