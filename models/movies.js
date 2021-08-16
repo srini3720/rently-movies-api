@@ -2,7 +2,10 @@ const mongoose = require("mongoose");
 const Joi = require("joi");
 const { Genres } = require("./genres");
 mongoose
-  .connect("mongodb://localhost/vidly")
+  .connect("mongodb://localhost/vidly", {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  })
   .then(() => console.log("Connected to database...."))
   .catch((err) => console.error("Could not connect to database", err));
 
@@ -23,7 +26,7 @@ const Movies = new mongoose.model(
 function validate(movies) {
   const schema = {
     title: Joi.string().required().min(5).max(255),
-    genre: Joi.string().required().max(255),
+    genre: Joi.objectId().required().max(255),
     numberInstock: Joi.number().required().max(255),
     dailyRentalRate: Joi.number().required().max(255),
   };

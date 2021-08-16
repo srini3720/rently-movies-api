@@ -15,13 +15,12 @@ router.get("/", async (req, res) => {
 router.get("/:id", async (req, res) => {
   try {
     const rental = await Rentals.findById(req.params.id);
+    res.send(rental);
   } catch {
     return res
       .status(400)
       .send(`cannot find rental with id : ${req.params.id}`);
   }
-
-  res.send(rental);
 });
 
 router.post("/", async (req, res) => {
@@ -42,6 +41,7 @@ router.post("/", async (req, res) => {
   const movie = await Movies.findById(req.body.movieId);
   if (movie.numberInstock === 0) return res.send(`Movies not in stock`);
   const customer = await Customer.findById(req.body.customerId);
+
   const rental = await new Rentals({
     customer: {
       _id: customer._id,
@@ -54,6 +54,7 @@ router.post("/", async (req, res) => {
       dailyRentalRate: movie.dailyRentalRate,
     },
   });
+
   try {
     new Fawn.Task()
       .save("rentals", rental)
@@ -67,12 +68,17 @@ router.post("/", async (req, res) => {
       .run();
     res.send(rental);
   } catch (err) {
-    res.status(500).send("Internal server failed ", err);
+    console.log(err);
+    res.status(500).send("Internal server failed ");
   }
   //   const savedRental = await rental.save();
   //   movie.numberInstock--;
   //   movie.save();
   //   res.send(savedRental);
+});
+router.delete("/:id", async (req, res) => {
+  const rental = await Rentals.deleteOne({ _id: req.params.id });
+  res.send(rental);
 });
 
 module.exports = router;

@@ -26,13 +26,13 @@ router.post("/", async (req, res) => {
     return res.status(400).send(`Invalid Genre id : ${req.body.genre}`);
   }
 
-  const movies = await new Movies({
+  const movies = new Movies({
     title: req.body.title,
     genre: req.body.genre,
     numberInstock: req.body.numberInstock,
     dailyRentalRate: req.body.dailyRentalRate,
   });
-  movies.save();
+  await movies.save();
   res.send(movies);
 });
 

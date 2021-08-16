@@ -1,7 +1,10 @@
 const Joi = require("joi");
 const mongoose = require("mongoose");
 mongoose
-  .connect("mongodb://localhost/vidly")
+  .connect("mongodb://localhost/vidly", {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  })
   .then(() => console.log("connected to database...."))
   .catch((err) => {
     console.error("could not connect to database....", err);

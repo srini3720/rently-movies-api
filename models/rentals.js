@@ -2,7 +2,10 @@ const mongoose = require("mongoose");
 const Joi = require("joi");
 
 mongoose
-  .connect("mongodb://localhost/vidly")
+  .connect("mongodb://localhost/vidly", {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  })
   .then(() => console.log("connected to database....."))
   .catch((err) => console.error("Could not connect to database", err));
 
@@ -65,8 +68,8 @@ const Rentals = new mongoose.model(
 
 function validate(rental) {
   const schema = {
-    customerId: Joi.string().required(),
-    movieId: Joi.string().required(),
+    customerId: Joi.objectId().required(),
+    movieId: Joi.objectId().required(),
   };
   return Joi.validate(rental, schema);
 }

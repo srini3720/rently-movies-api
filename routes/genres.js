@@ -21,10 +21,10 @@ router.get("/:id", async (req, res) => {
 router.post("/", async (req, res) => {
   const { error } = validate(req.body);
   if (error) return res.status(400).send(error.details[0].message);
-  const genre = await new Genres({
+  const genre = new Genres({
     name: req.body.name,
   });
-  genre.save();
+  await genre.save();
   res.send(genre);
 });
 

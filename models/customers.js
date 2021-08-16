@@ -11,7 +11,10 @@ function validateCustomer(customer) {
 }
 
 mongoose
-  .connect("mongodb://localhost/vidly")
+  .connect("mongodb://localhost/vidly", {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  })
   .then(() => console.log("Connected to database....."))
   .catch((err) => {
     console.log("Could not connect to database....", err);
