@@ -4,6 +4,7 @@ mongoose
   .connect("mongodb://localhost/vidly", {
     useNewUrlParser: true,
     useUnifiedTopology: true,
+    useCreateIndex: true,
   })
   .then(() => console.log("connected to database...."))
   .catch((err) => {
