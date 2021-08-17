@@ -30,7 +30,8 @@ router.post("/", async (req, res) => {
   const customer = await Customer.findById(req.body.customerId);
   if (!customer) return res.status(400).send(`Invalid customer`);
 
-  const movie = await Movies.findById(req.body.moviesId);
+  const movie = await Movies.findById(req.body.movieId);
+
   if (!movie) return res.status(400).send(`Invalid movie`);
 
   if (movie.numberInstock === 0) return res.send(`Movies not in stock`);
