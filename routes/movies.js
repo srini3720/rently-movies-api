@@ -3,6 +3,7 @@ const { Genres } = require("../models/genres");
 const router = express.Router();
 const { Movies, validate } = require("../models/movies");
 const auth = require("../middleware/auth");
+const admin = require("../middleware/admin");
 
 router.get("/", async (req, res) => {
   const movies = await Movies.find().populate("genre");
@@ -55,7 +56,7 @@ router.put("/:id", auth, async (req, res) => {
   res.send(movies);
 });
 
-router.delete("/:id", auth, async (req, res) => {
+router.delete("/:id", [auth, admin], async (req, res) => {
   const movies = await Movies.deleteOne({ _id: req.params.id });
   res.send(movies);
 });
