@@ -5,6 +5,7 @@ const Fawn = require("fawn");
 const express = require("express");
 const router = express.Router();
 const mongoose = require("mongoose");
+const auth = require("../middleware/auth");
 Fawn.init(mongoose);
 
 router.get("/", async (req, res) => {
