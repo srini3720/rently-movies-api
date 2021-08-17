@@ -20,11 +20,10 @@ router.get("/:id", async (req, res) => {
 router.post("/", async (req, res) => {
   const { error } = validate(req.body);
   if (error) return res.status(400).send(error.details[0].message);
-  try {
-    await Genres.findById(req.body.genre);
-  } catch {
+
+  const genre = await Genres.findById(req.body.genre);
+  if (!genre)
     return res.status(400).send(`Invalid Genre id : ${req.body.genre}`);
-  }
 
   const movies = new Movies({
     title: req.body.title,

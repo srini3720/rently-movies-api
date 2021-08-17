@@ -27,20 +27,13 @@ router.post("/", async (req, res) => {
   const { error } = validate(req.body);
   if (error) return res.status(404).send(error.details[0].message);
 
-  try {
-    await Customer.findById(req.body.customerId);
-  } catch {
-    return res.status(400).send(`Invalid customer`);
-  }
-
-  try {
-    await Movies.findById(req.body.moviesId);
-  } catch {
-    return res.status(400).send(`Invalid customer`);
-  }
-  const movie = await Movies.findById(req.body.movieId);
-  if (movie.numberInstock === 0) return res.send(`Movies not in stock`);
   const customer = await Customer.findById(req.body.customerId);
+  if (!customer) return res.status(400).send(`Invalid customer`);
+
+  const movie = await Movies.findById(req.body.moviesId);
+  if (!movie) return res.status(400).send(`Invalid movie`);
+
+  if (movie.numberInstock === 0) return res.send(`Movies not in stock`);
 
   const rental = await new Rentals({
     customer: {
