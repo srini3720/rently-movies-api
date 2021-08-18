@@ -2,14 +2,6 @@ const mongoose = require("mongoose");
 const Joi = require("joi");
 const jwt = require("jsonwebtoken");
 
-mongoose
-  .connect("mongodb://localhost/vidly", {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-    useCreateIndex: true,
-  })
-  .then(() => console.log("Connected to database........"))
-  .catch((err) => console.error("Could not connect to database", err));
 const userSchema = new mongoose.Schema({
   name: {
     type: String,

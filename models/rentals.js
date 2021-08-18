@@ -1,15 +1,6 @@
 const mongoose = require("mongoose");
 const Joi = require("joi");
 
-mongoose
-  .connect("mongodb://localhost/vidly", {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-    useCreateIndex: true,
-  })
-  .then(() => console.log("connected to database....."))
-  .catch((err) => console.error("Could not connect to database", err));
-
 const Rentals = new mongoose.model(
   "rentals",
   new mongoose.Schema({

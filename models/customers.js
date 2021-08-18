@@ -10,17 +10,6 @@ function validateCustomer(customer) {
   return Joi.validate(customer, schema);
 }
 
-mongoose
-  .connect("mongodb://localhost/vidly", {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-    useCreateIndex: true,
-  })
-  .then(() => console.log("Connected to database....."))
-  .catch((err) => {
-    console.log("Could not connect to database....", err);
-  });
-
 const Customer = new mongoose.model(
   "customers",
   new mongoose.Schema({
