@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "jest --watchAll",
+    "test": "jest --watchAll --verbose",
     "start": "nodemon index.js"
   },
   "author": "",
@@ -25,6 +25,7 @@
     "winston-mongodb": "^3.0.0"
   },
   "devDependencies": {
-    "jest": "^27.0.6"
+    "jest": "^27.0.6",
+    "supertest": "^6.1.6"
   }
 }
