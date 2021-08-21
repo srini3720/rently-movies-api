@@ -7,8 +7,12 @@ const users = require("../routes/users");
 const auth = require("../routes/auth");
 const express = require("express");
 const error = require("../middleware/error");
+const bodyParser = require("body-parser");
 
 module.exports = function (app) {
+  app.use(bodyParser.urlencoded({ extended: false }));
+  app.use(bodyParser.json());
+
   app.use("/api/genres", genres);
   app.use("/", home);
   app.use("/api/customers", customers);
