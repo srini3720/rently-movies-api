@@ -6,7 +6,10 @@
   "scripts": {
     "test": "npm run jest",
     "jest": "jest --watchAll --verbose --coverage",
-    "start": "nodemon index.js"
+    "start": "node index.js"
+  },
+  "engines":{
+    "node":"16.5.0"
   },
   "author": "",
   "license": "ISC",
