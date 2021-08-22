@@ -1,14 +1,17 @@
+const winston = require("winston");
 const express = require("express");
 const app = express();
-const genres = require("./routes/genres");
-const home = require("./routes/home");
-require("dotenv").config();
 
-app.use(express.json());
+require("./startup/logging")();
+require("./startup/routes")(app);
+require("./startup/db")();
+require("./startup/config")();
+require("./startup/validation")();
+require("./startup/prod")(app);
 
-app.listen(process.env.PORT, () => {
-  console.log(`listening on http://localhost:${process.env.PORT}`);
+const port = process.env.PORT || 5000;
+const server = app.listen(port, () => {
+  winston.info(`listening on port : ${port}`);
 });
 
-app.use("/api/genres", genres);
-app.use("/", home);
+module.exports = server;
