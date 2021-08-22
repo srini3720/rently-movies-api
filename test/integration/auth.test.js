@@ -3,8 +3,11 @@ const { Genres } = require("../../models/genres");
 const { User } = require("../../models/users");
 
 describe("Auth genre", () => {
-  beforeAll(() => {
-    (server = require("../../index")), server.close();
+  beforeAll(async () => {
+    (server = require("../../index")), await server.close();
+  });
+  afterAll(async () => {
+    (server = require("../../index")), await server.close();
   });
   beforeEach(() => {
     (server = require("../../index")), (token = new User().generateAuthToken());

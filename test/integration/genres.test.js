@@ -4,8 +4,11 @@ const { User } = require("../../models/users");
 const mongoose = require("mongoose");
 
 describe("/api/genres", () => {
-  beforeAll(() => {
-    (server = require("../../index")), server.close();
+  beforeAll(async () => {
+    (server = require("../../index")), await server.close();
+  });
+  afterAll(async () => {
+    (server = require("../../index")), await server.close();
   });
   beforeEach(() => {
     server = require("../../index");
