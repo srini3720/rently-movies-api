@@ -4,8 +4,8 @@ require("dotenv").config();
 
 module.exports = function (dbPath) {
   process.env.NODE_ENV === "test"
-    ? (dbPath = "mongodb://localhost/vidly_tests")
-    : (dbPath = "mongodb://localhost/vidly");
+    ? (dbPath = process.env.db)
+    : (dbPath = process.env.db);
 
   mongoose
     .connect(dbPath, {
@@ -13,5 +13,5 @@ module.exports = function (dbPath) {
       useUnifiedTopology: true,
       useCreateIndex: true,
     })
-    .then(() => winston.info(`Connected to MongoDB database ${dbPath}`));
+    .then(() => winston.info(`Connected to MongoDB database`));
 };
