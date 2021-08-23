@@ -1,4 +1,4 @@
-# rently movies
+# rently movies api
 
 live on : https://rently-movies.herokuapp.com/
 
