@@ -1,6 +1,8 @@
 # rently movies api
 
 live on : https://rently-movies.herokuapp.com/
+ 
+currently working on fortend of rently-movies so server may be under maintenance for sometime
 
 dependencies  used : 
     bcrypt,
