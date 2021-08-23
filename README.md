@@ -1,4 +1,3 @@
 # rently movies
 
-create .env => PORT = 5000
-create .env => jwtPrivateKey = ".............."
+live on : https://rently-movies.herokuapp.com/
